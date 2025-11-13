@@ -27,7 +27,7 @@ If you are developing a production application, we recommend using TypeScript wi
 - [Python 3.11+](https://www.python.org/)
 
 el projecto esta hecho con react + vite(Frontend) y django(backend)
-clona el repo git clone 
+clona el repo git clone https://github.com/Joiner-Mendoza/IterCode.git
 para iniciarlo se accede a itercode 
 cd itercode
 se instalan las dependecias
@@ -41,7 +41,9 @@ se debe crear un entorno virtual
 python venv .env
 y luego s eejecuta el entordo
 .env\Scripts\activate
-dentro del entorno se instalan las dependencias
-npm instal
+dentro del entorno se instala el  requiremen
+pip install -r requirements.txt
 y se ejecuta el bakend
 python manage.py runserver
+
+la ruta del login se /#/login
