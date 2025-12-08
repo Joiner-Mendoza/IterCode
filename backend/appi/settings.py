@@ -43,8 +43,14 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'corsheaders',
+    
 ]
 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ]
+}
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
@@ -129,6 +135,10 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+import os
+
+MEDIA_URL = '/products/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'products')
 
 
 

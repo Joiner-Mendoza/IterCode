@@ -1,6 +1,7 @@
-import React, { useState } from "react";
-import './App.css';
-import './styles/login.css';
+import React, { useEffect, useState } from "react";
+import AuthContext from "../context/AuthContext";
+import '../App.css';
+import '../styles/login.css';
 import { useNavigate } from "react-router";
 import { Link } from "react-router-dom"; 
 import axios from "axios"; 
@@ -14,9 +15,15 @@ function LoginPage() {
   const [password, setPassword] = useState('');
   const [fieldErrors, setFieldErrors] = useState({});
 
+  const { user } = React.useContext(AuthContext)
+  // Redirigir al dashboard si el usuario ya está autenticado
+   useEffect(() => {
+        if (user) navigate("/dashboard");
+    }, [user]);
+
   // End Point para buscar al usuario en la base d edatos
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
+    // e.preventDefault();
     
     const errors = {};
     if (!userName) errors.userName = 'El nombre de usuario es incorrecto';
@@ -44,16 +51,26 @@ function LoginPage() {
       if (response.data.token) {
         console.log("Token de usuaio:", response.data.token);
         localStorage.setItem("token", response.data.token);//lo guardamos en localstorage
+
       }
-      navigate('/');
+      navigate('/dashboard');
 
     } catch (error) {
+      Swal.fire({
+        title:'Fallo al iniciar sesión',
+        text:'El Nombre de Usuario o la contrasena son incorrectos',
+        icon:'error',
+        confirmButtonText:'OK',
+      })
+
       console.error("Error al iniciar sesion:", error);
     }
   };
 
   return (
-    <div id="Container-login-form">
+    <>
+    {!user && (
+      <div id="Container-login-form">
       <div className="login-container">
         <h2>Iniciar Sesión</h2>
         {/* Formulario */}
@@ -90,6 +107,8 @@ function LoginPage() {
         </form>
       </div>
     </div>
+    )}
+    </>
   );
 }
 
