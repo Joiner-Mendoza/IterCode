@@ -7,6 +7,7 @@ import '../styles/editproduct.css'
 function EditProduct() {
     const navigate = useNavigate();
     const { id } = useParams();
+    const API_URL = import.meta.env.VITE_API_URL;
 
     const [newImage, setNewImage] = useState(null);          // archivo nuevo
     const [currentImage, setCurrentImage] = useState("");    //
@@ -16,7 +17,7 @@ function EditProduct() {
     const [newStock, setNewStock] = useState("");
 
     useEffect(() => {
-        axios.get(`http://127.0.0.1:8000/api/products/${id}/`)
+        axios.get(`${API_URL}/api/products/${id}/`)
         .then(res => {
             setNewName(res.data.name);
             setNewDescription(res.data.description);
@@ -40,7 +41,7 @@ function EditProduct() {
                 }
 
                 const response = await axios.put(
-                    `http://127.0.0.1:8000/api/products/${id}/`,
+                    `${API_URL}/api/products/${id}/`,
                     formData,
                     {
                         headers: { "Content-Type": "multipart/form-data" }

@@ -10,7 +10,7 @@ import Swal from "sweetalert2";
 
 function LoginPage() {
   const navigate = useNavigate();
-
+  const API_URL = import.meta.env.VITE_API_URL;
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
   const [fieldErrors, setFieldErrors] = useState({});
@@ -35,7 +35,7 @@ function LoginPage() {
     console.log("  sesión:", { userName, password });
 
     try {
-      const response = await axios.post('http://127.0.0.1:8000/api/login/', {
+      const response = await axios.post(`${API_URL}/api/login/`, {
         username: userName,
         password: password,
       });

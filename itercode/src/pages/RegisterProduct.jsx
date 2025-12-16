@@ -7,6 +7,7 @@ import  "../styles/registerproduct.css"
 
 function RegisterProduct() {
   const navigate = useNavigate()
+  const API_URL = import.meta.env.VITE_API_URL;
   const [form, setForm] = React.useState({
     name: "",
     image: null,
@@ -62,7 +63,7 @@ function RegisterProduct() {
     try {
       const token = localStorage.getItem("token");
 
-      const response = await axios.post("http://127.0.0.1:8000/api/products/",data,{
+      const response = await axios.post(`${API_URL}/api/products/`,data,{
           headers: {
             "Content-Type": "multipart/form-data",
             Authorization: `Token ${token}`,

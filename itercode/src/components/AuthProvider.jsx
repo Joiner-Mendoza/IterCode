@@ -6,15 +6,16 @@ function AuthProvider({ children }) {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
 
+    const API_URL = import.meta.env.VITE_API_URL;
     useEffect(() => {
         const token = localStorage.getItem("token");
 
         if (!token) {
             setLoading(false);
-            return;
+            return;                   
         }
 
-        axios.get("http://127.0.0.1:8000/api/users/me/", {
+        axios.get(`${API_URL}/api/users/me/`, {
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Token ${token}`,

@@ -7,6 +7,7 @@ import Swal from "sweetalert2";
 import AuthContext from "../context/AuthContext";
 
 function RegisterPage() {
+  const API_URL = import.meta.env.VITE_API_URL;
   const navigate = useNavigate();
 
   // Estados del formulario
@@ -56,9 +57,9 @@ function RegisterPage() {
     if (user?.profile?.groups?.includes("Administrador") ||
         user?.profile?.groups?.includes("Supervisor")) 
     {
-      axios
-        .get("http://127.0.0.1:8000/api/groups/")
-        .then((res) => {
+      axios 
+        .get(`${API_URL}/api/groups/`)
+        .then((res) => {                         
           console.log("Grupos cargados:", res.data);
           setGroups(res.data);
         })
@@ -109,7 +110,7 @@ function RegisterPage() {
 
     try {
       const response = await axios.post(
-        "http://127.0.0.1:8000/api/register/",
+        `${API_URL}/api/register/`,
         payload,
         {
           headers: {
