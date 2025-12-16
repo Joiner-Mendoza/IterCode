@@ -102,7 +102,7 @@ function LoginPage() {
           </button>
 
           <p className="register-link">
-            ¿No tienes cuenta? <Link to="/RegisterPage">Regístrate aquí</Link>
+            ¿No tienes cuenta? <Link to="/register">Regístrate aquí</Link>
           </p>
         </form>
       </div>

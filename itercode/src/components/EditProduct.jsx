@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import Swal from "sweetalert2";
+import '../styles/editproduct.css'
 
 function EditProduct() {
     const navigate = useNavigate();
@@ -70,47 +71,80 @@ function EditProduct() {
     };
 
     return (
-        <div className="card-body d-flex flex-column">
+        <div className="card shadow-lg p-4 rounded-4">
 
-            <input
-                type="text"
-                value={newName}
-                onChange={(e) => setNewName(e.target.value)}
-            />
+            <h4 className="text-center mb-4">Editar Producto</h4>
 
-            <img src={currentImage} alt="Producto" width="100" />
+            <div className="mb-3">
+                <label className="form-label fw-semibold">Nombre del producto</label>
+                <input
+                    type="text"
+                    className="form-control"
+                    value={newName}
+                    onChange={(e) => setNewName(e.target.value)}
+                />
+            </div>
 
-            <input
-                type="file"
-                onChange={(e) => setNewImage(e.target.files[0])}
-            />
+            <div className="mb-3 text-center">
+                <label className="form-label fw-semibold d-block">Imagen Actual</label>
+                <img
+                    src={currentImage}
+                    alt="Producto"
+                    className="img-thumbnail mb-2"
+                    style={{ width: "150px", height: "150px", objectFit: "cover" }}
+                />
 
-            <input
-                type="text"
-                value={newDescription}
-                onChange={(e) => setNewDescription(e.target.value)}
-            />
+                <input
+                    type="file"
+                    className="form-control mt-2"
+                    onChange={(e) => setNewImage(e.target.files[0])}
+                />
+            </div>
 
-            <input
-                type="number"
-                value={newPrice}
-                onChange={(e) => setNewPrice(e.target.value)}
-            />
+            <div className="mb-3">
+                <label className="form-label fw-semibold">Descripción</label>
+                <textarea
+                    className="form-control txt"
+                    value={newDescription}
+                    onChange={(e) => setNewDescription(e.target.value)}
+                    rows="3"
+                ></textarea>
+            </div>
 
-            <input
-                type="number"
-                value={newStock}
-                onChange={(e) => setNewStock(e.target.value)}
-            />
+            <div className="row">
+                <div className="col-md-6 mb-3">
+                    <label className="form-label fw-semibold">Precio</label>
+                    <input
+                        type="number"
+                        className="form-control"
+                        value={newPrice}
+                        onChange={(e) => setNewPrice(e.target.value)}
+                    />
+                </div>
 
-            <button className="btn btn-primary mt-2" onClick={EditConfirm}>
-                Confirmar Cambios
-            </button>
+                <div className="col-md-6 mb-3">
+                    <label className="form-label fw-semibold">Stock</label>
+                    <input
+                        type="number"
+                        className="form-control"
+                        value={newStock}
+                        onChange={(e) => setNewStock(e.target.value)}
+                    />
+                </div>
+            </div>
 
-            <button className="btn btn-secondary mt-2" onClick={cancel}>
-                Cancelar
-            </button>
+            <div className="d-flex justify-content-between mt-4">
+                <button className="btn btn-primary px-4" onClick={EditConfirm}>
+                    Guardar Cambios
+                </button>
+
+                <button className="btn btn-outline-secondary px-4" onClick={cancel}>
+                    Cancelar
+                </button>
+            </div>
+
         </div>
+
     );
 }
 

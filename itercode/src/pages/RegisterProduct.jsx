@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router";
 import Swal from "sweetalert2";
@@ -15,6 +15,13 @@ function RegisterProduct() {
     stock: "",
     date_in: "",
   });
+
+  const [date,setDate] = useState(''); //Fecha por defecto para el input
+  useEffect(()=> {
+    const today = new Date();
+    const formatted = today.toISOString().split('T')[0];
+    setDate(formatted)
+  },[])
 
   const [fieldErrors, setFieldErrors] = React.useState({});
   const [error, setError] = React.useState(null);
@@ -158,13 +165,13 @@ function RegisterProduct() {
         {/* FECHA */}
         <div className="mb-3">
           <label>Fecha de entrada</label>
-          <input
-            name="date_in"
-            type="date"
-            className="form-control"
-            value={form.date_in}
-            onChange={handleChange}
+          <input 
+              type="date" 
+              className="form-control"
+              value={date}
+              onChange={(e) => setDate(e.target.value)}
           />
+
         </div>
 
         <button className="btn btn-primary">Guardar</button>

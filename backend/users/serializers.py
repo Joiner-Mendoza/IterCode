@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User,Group
 from django.contrib.auth.hashers import make_password
-from .models import UserProfile,Product
+from .models import UserProfile,Product,Order,OrderItem
 
 
 class UserProfileSerializer(serializers.ModelSerializer):
@@ -64,3 +64,35 @@ class ProductSerializer(serializers.ModelSerializer):
         request = self.context.get('request')
         if obj.image and request:
             return request.build_absolute_uri(obj.image.url) # Retorna la URL completa de la imagen
+        
+
+
+# manejo dle serialiser de las orders
+
+class OrderItemSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = OrderItem
+        fields = ["product", "quantity", "price"]
+
+
+class OrderSerializer(serializers.ModelSerializer):
+    items = OrderItemSerializer(many=True)
+
+    class Meta:
+        model = Order
+        fields = ["id", "user", "total", "items", "created_at"]
+
+    def create(self, validated_data):
+        items_data = validated_data.pop("items")
+        order = Order.objects.create(**validated_data)
+
+        for item in items_data:
+            OrderItem.objects.create(
+                order=order,
+                product=item["product"],
+                quantity=item["quantity"],
+                price=item["price"]
+            )
+
+        return order
+         

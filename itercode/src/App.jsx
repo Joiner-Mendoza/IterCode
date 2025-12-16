@@ -7,7 +7,6 @@ import { AuthProvider } from "./components/AuthProvider";
 
 import { LoginPage } from './pages/LoginPage'
 import { RegisterPage } from './pages/RegisterPage'
-import { Home } from './pages/Home'
 import { RegisterProduct } from './pages/RegisterProduct'
 import { Dashboard } from './pages/Dashboard'
 import { Menu } from './components/Menu'
@@ -23,9 +22,8 @@ function AppContent() {
       {/* {user && <Menu />} */}
       <Menu/>
       <Routes>
-        <Route path='/' element={<Home />} />
         <Route path='/login' element={<LoginPage />} />
-        <Route path='/RegisterPage' element={<RegisterPage />} />
+        <Route path='/register' element={<RegisterPage />} />
         <Route path='/RegisterProduct' element={<RegisterProduct />} />
         <Route path="/edit/:id" element={<EditProduct />} />
 

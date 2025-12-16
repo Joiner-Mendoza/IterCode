@@ -14,5 +14,7 @@ urlpatterns = [
     path('users/', UserListView.as_view(), name='user-list'),
     path('users/me/', CurrentUserView.as_view(), name='current-user'),
 
+    path("orders/", CreateOrderView.as_view(), name="create-order"),
+
 ]
     

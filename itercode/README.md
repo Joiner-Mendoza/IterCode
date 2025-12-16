@@ -38,11 +38,13 @@ npm run dev
 ahora se accede en una terminal diferente al backend
 cd backend
 se debe crear un entorno virtual 
-python venv .env
+python -m venv .env
 y luego s eejecuta el entordo
 .env\Scripts\activate
 dentro del entorno se instala el  requiremen
 pip install -r requirements.txt
+ademas se debe instalar pillow para  las imagenes
+python -m pip install Pillow
 y se ejecuta el bakend
 python manage.py runserver
 

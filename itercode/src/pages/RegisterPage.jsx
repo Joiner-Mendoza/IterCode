@@ -140,7 +140,6 @@ function RegisterPage() {
 
   return (
     <>
-      {!user && (
         <div id="Container-register-form">
           <div className="register-container">
             <h2>Registro de usuario</h2>
@@ -272,7 +271,6 @@ function RegisterPage() {
             </form>
           </div>
         </div>
-      )}
     </>
   );
 }

@@ -1,6 +1,6 @@
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework import status
+from rest_framework import status,permissions
 from .serializers import *
 from .models import *
 from django.contrib.auth import authenticate
@@ -112,5 +112,17 @@ def get_user_groups(request):
     groups = Group.objects.values('id','name')
     return Response(groups)
 
+# VISTA PARA CREAR ORDEN
 
+class CreateOrderView(APIView):
+    permission_classes = [permissions.AllowAny] 
+
+    def post(self, request):
+        serializer = OrderSerializer(data=request.data)
+
+        if serializer.is_valid():
+            serializer.save(user=request.user if request.user.is_authenticated else None)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
