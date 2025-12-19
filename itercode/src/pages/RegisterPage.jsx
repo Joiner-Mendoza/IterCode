@@ -7,7 +7,8 @@ import Swal from "sweetalert2";
 import AuthContext from "../context/AuthContext";
 
 function RegisterPage() {
-  const API_URL = import.meta.env.VITE_API_URL;
+  // const API_URL = import.meta.env.VITE_API_URL; // para desarrollo
+  const API = import.meta.env.VITE_API_URL; // para producción
   const navigate = useNavigate();
 
   // Estados del formulario
@@ -110,7 +111,7 @@ function RegisterPage() {
 
     try {
       const response = await axios.post(
-        `${API_URL}/api/register/`,
+        `${API}/api/register/`,
         payload,
         {
           headers: {

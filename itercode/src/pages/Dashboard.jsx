@@ -5,7 +5,8 @@ import "../styles/cartproduct.css";
 import Swal from "sweetalert2";
 
 function Dashboard() {
-  const API_URL = import.meta.env.VITE_API_URL;
+  // const API_URL = import.meta.env.VITE_API_URL; // para desarrollo
+  const API = import.meta.env.VITE_API_URL; // para producción
   // Productos traídos del backend
   const [products, setProducts] = useState([]);
 
@@ -27,7 +28,7 @@ function Dashboard() {
 
   const getProducts = async () => {
     try {
-      const response = await axios.get(`${API_URL}/api/products/`);
+      const response = await axios.get(`${API}/api/products/`);
       setProducts(response.data);
     } catch (err) {
       console.error("Error al cargar productos:", err);
@@ -119,7 +120,7 @@ function Dashboard() {
   };
 
   try {
-    await axios.post(`${API_URL}/api/orders/`,orderData);
+    await axios.post(`${API}/api/orders/`,orderData);
     Swal.fire({
       title:'Pedido realizado ',
       text:'El pedido ha sido realizado exiosamente',

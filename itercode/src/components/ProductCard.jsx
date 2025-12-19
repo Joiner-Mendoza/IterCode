@@ -5,17 +5,7 @@ import "../styles/productcard.css";
 import AuthContext from "../context/AuthContext";
 import { useNavigate } from "react-router";
 
-function ProductCard({
-  id,
-  name,
-  image_url,
-  price,
-  description,
-  quantity,
-  onAddToCart,
-  onIncrement,
-  onDecrement,
-}) {
+function ProductCard({id,name,image_url,price,description,quantity,onAddToCart,onIncrement,onDecrement,}) {
   const navigate = useNavigate("");
   const { user } = React.useContext(AuthContext);
   const userGroups = user?.profile.groups || [];

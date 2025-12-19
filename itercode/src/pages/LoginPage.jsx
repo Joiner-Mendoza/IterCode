@@ -10,7 +10,8 @@ import Swal from "sweetalert2";
 
 function LoginPage() {
   const navigate = useNavigate();
-  const API_URL = import.meta.env.VITE_API_URL;
+  // const API_URL = import.meta.env.VITE_API_URL; // para desarrollo
+  const API = import.meta.env.VITE_API_URL; // para producción
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
   const [fieldErrors, setFieldErrors] = useState({});
@@ -35,7 +36,7 @@ function LoginPage() {
     console.log("  sesión:", { userName, password });
 
     try {
-      const response = await axios.post(`${API_URL}/api/login/`, {
+      const response = await axios.post(`${API}/api/login/`, {
         username: userName,
         password: password,
       });
