@@ -59,7 +59,7 @@ function RegisterPage() {
         user?.profile?.groups?.includes("Supervisor")) 
     {
       axios 
-        .get(`${API_URL}/api/groups/`)
+        .get(`${API}/api/groups/`)
         .then((res) => {                         
           console.log("Grupos cargados:", res.data);
           setGroups(res.data);
