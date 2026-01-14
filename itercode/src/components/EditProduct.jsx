@@ -18,7 +18,7 @@ function EditProduct() {
     const [newStock, setNewStock] = useState("");
 
     useEffect(() => {
-        axios.get(`${API}/api/products/${id}/`)
+        axios.get(`${API}/products/${id}/`)
         .then(res => {
             setNewName(res.data.name);
             setNewDescription(res.data.description);
@@ -42,7 +42,7 @@ function EditProduct() {
                 }
 
                 const response = await axios.put(
-                    `${API}/api/products/${id}/`,
+                    `${API}/products/${id}/`,
                     formData,
                     {
                         headers: { "Content-Type": "multipart/form-data" }

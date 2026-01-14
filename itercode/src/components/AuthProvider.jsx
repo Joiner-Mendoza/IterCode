@@ -3,46 +3,66 @@ import { useState, useEffect } from "react";
 import AuthContext from "../context/AuthContext";
 
 function AuthProvider({ children }) {
-    const [user, setUser] = useState(null);
-    const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-    // const API_URL = import.meta.env.VITE_API_URL; // para desarrollo
-    const API = import.meta.env.VITE_API_URL; // para producción
-    useEffect(() => {
-        const token = localStorage.getItem("token");
+  const API = import.meta.env.VITE_API_URL;
 
-        if (!token) {
-            setLoading(false);
-            return;                   
-        }
+  // Cargar usuario si hay token (al recargar)
+  const loadUser = async () => {
+    const token = localStorage.getItem("token");
 
-        axios.get(`${API}/api/users/me/`, {
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Token ${token}`,
-            }
-        })
-        .then((res) => {
-            console.log("Usuario cargado en proviide:", res.data);
-            console.log("API URL:", API);
-            setUser(res.data);
-        })
-        .catch((err) => {
-            console.error("Error al obtener usuario:", err);
-            localStorage.removeItem("token");
-            setUser(null);
-        })
-        .finally(() => {
-            setLoading(false);
-        });
+    if (!token) {
+      setLoading(false);
+      return;
+    }
 
-    }, []);
+    try {
+      const res = await axios.get(`${API}/api/users/me/`, {
+        headers: {
+          Authorization: `Token ${token}`,
+        },
+      });
 
-    return (
-        <AuthContext.Provider value={{ user, setUser, loading }}>
-            {children}
-        </AuthContext.Provider>
-    );
+      setUser(res.data);
+    } catch (error) {
+      console.error("Error cargando usuario:", error);
+      localStorage.removeItem("token");
+      setUser(null);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    loadUser();
+  }, []);
+
+  // LOGIN SIN RECARGAR
+  const loginUser = async (credentials) => {
+    const res = await axios.post(`${API}/api/login/`, credentials);
+    localStorage.setItem("token", res.data.token);
+    // Cargar usuario inmediatamente
+    await loadUser();
+  };
+
+  const logoutUser = () => {
+    localStorage.removeItem("token");
+    setUser(null);
+  };
+
+  return (
+    <AuthContext.Provider
+      value={{
+        user,
+        loading,
+        loginUser,
+        logoutUser,
+      }}
+    >
+      {children}
+    </AuthContext.Provider>
+  );
 }
 
 export { AuthProvider };

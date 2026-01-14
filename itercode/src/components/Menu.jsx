@@ -60,7 +60,7 @@ function Menu() {
 
                         <li className="nav-item">
                             <Link className="nav-link" to="/dashboard">
-                                Marketing
+                                Productos
                             </Link>
                         </li>
                     </ul>

@@ -120,7 +120,7 @@ function Dashboard() {
   };
 
   try {
-    await axios.post(`${API}/api/orders/`,orderData);
+    await axios.post(`${API}/orders/`,orderData);
     Swal.fire({
       title:'Pedido realizado ',
       text:'El pedido ha sido realizado exiosamente',
