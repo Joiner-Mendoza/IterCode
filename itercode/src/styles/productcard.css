@@ -11,3 +11,15 @@
     font-size:18px !important;
 
 }
+.h-100 {
+    transition: ease .5s;
+}
+
+@media (max-width: 900px) {
+    .h-100 {
+        width: 400px !important;
+    }
+    .card-img-top {
+        height: 240px !important;
+    }
+}  
