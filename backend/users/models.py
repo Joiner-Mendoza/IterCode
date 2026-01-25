@@ -23,6 +23,19 @@ class Product(models.Model):
         return self.name
 
 class Order(models.Model):
+    STATUS_CHOICES = [
+        ('PENDING', 'Pendiente'), 
+        ('PREPARING', 'En preparación'), 
+        ('COMPLETED', 'Completado'), 
+        ('CANCELLED', 'Cancelado'),
+    ]
+#   ESTA ES LA RELACIÓN ENTRE USUARIO Y ORDEN
+    status = models.CharField(
+        max_length=10,
+        choices=STATUS_CHOICES,
+        default='PENDING'
+    )
+
     user = models.ForeignKey(
         User,
         on_delete=models.SET_NULL,
@@ -34,7 +47,7 @@ class Order(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"Orden #{self.id}"
+        return f"Orden #{self.id} - {self.status}"
 
 
 class OrderItem(models.Model):

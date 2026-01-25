@@ -3,11 +3,12 @@ import { ProductCard } from "../components/ProductCard";
 import axios from "axios";
 import "../styles/cartproduct.css";
 import Swal from "sweetalert2";
-
+import { DashboardProducts } from "../pages/DashboardProducts.jsx";
 function Dashboard() {
   // const API_URL = import.meta.env.VITE_API_URL; // para desarrollo
   const API = import.meta.env.VITE_API_URL; // para producción
   // Productos traídos del backend
+  const token = localStorage.getItem("token");
   const [products, setProducts] = useState([]);
 
   // Carrito de compras
@@ -119,25 +120,37 @@ function Dashboard() {
     }))
   };
 
-  try {
-    await axios.post(`${API}/orders/`,orderData);
-    Swal.fire({
-      title:'Pedido realizado ',
-      text:'El pedido ha sido realizado exiosamente',
-      icon:'success'
-    })
-    setCart([]);
-    localStorage.removeItem("cart");
-    setIsActive(false);
+try {
+  await axios.post(
+    `${API}/api/orders/`,
+    orderData,
+    {
+      headers: {
+        Authorization: `Token ${token}`,
+      },
+    }
+  );
 
-  } catch (error) {
-    console.error("Error al crear la orden", error);
-        Swal.fire({
-      title:'Pedido rechazado ',
-      text:'El pedido ha sido rechazado',
-      icon:'error'
-    })
-  }
+  Swal.fire({
+    title: "Pedido realizado",
+    text: "El pedido ha sido realizado exitosamente",
+    icon: "success",
+  });
+
+  setCart([]);
+  localStorage.removeItem("cart");
+  setIsActive(false);
+
+} catch (error) {
+  console.error("Error al crear la orden", error);
+  console.error("error response", error.response || error.message);
+
+  Swal.fire({
+    title: "Pedido rechazado",
+    text: "El pedido ha sido rechazado",
+    icon: "error",
+  });
+}
 };
 
 
@@ -151,7 +164,10 @@ function Dashboard() {
 
   return (
     <div className="container mt-4 text-center">
-
+    <div>
+      <h1>Panel de Control</h1>
+      <DashboardProducts />
+    </div>
       {/* BOTÓN FLOTANTE DEL CARRITO */}
       <button className="btn btn-warning cart-toggle" onClick={handleShow}>
         🛒 {cart.length}

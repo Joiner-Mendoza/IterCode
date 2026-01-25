@@ -16,5 +16,7 @@ urlpatterns = [
 
     path("orders/", CreateOrderView.as_view(), name="create-order"),
 
+    path('dashboard/stats/',DashboardStatsView.as_view(),name="dashboard-stats"),
+
 ]
     

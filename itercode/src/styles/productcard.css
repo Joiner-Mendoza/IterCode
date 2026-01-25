@@ -13,11 +13,13 @@
 }
 .h-100 {
     transition: ease .5s;
+    gap: 10px;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 400px) {
     .h-100 {
-        width: 400px !important;
+        width: 93% !important;
+        /* width: 400px !important; */
     }
     .card-img-top {
         height: 240px !important;

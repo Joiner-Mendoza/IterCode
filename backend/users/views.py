@@ -125,4 +125,20 @@ class CreateOrderView(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+# DASHBOARD STATS VIEW
+class DashboardStatsView(APIView): #dashboard stats
+    permission_classes = [IsAuthenticated]# solo usuarios autenticados pueden acceder
 
+    def get(selfs,request):
+        total_products = Product.objects.count()
+
+        total_sold = (
+            Order.objects.filter(status='completed')
+            .aggregate(total=models.Sum('total'))['total__sum'] or 0
+        )
+        preparing_orders = Order.objects.filter(status='preparing').count()
+        return Response({
+            "total_prodcts": total_products,
+            "total_sold": total_sold,
+            "preparimg_orders":preparing_orders,
+        })

@@ -31,7 +31,7 @@ function AuthProvider({ children }) {
       setUser(null);
     } finally {
       setLoading(false);
-    }
+     }
   };
 
   useEffect(() => {
